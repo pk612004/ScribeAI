@@ -1,0 +1,42 @@
+{
+  "name": "scribeai-server",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@prisma/client": "^5.5.0",
+    "@socket.io/redis-adapter": "^8.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "ioredis": "^5.3.2",
+    "node-fetch": "^2.6.7",
+    "prisma": "^5.5.0",
+    "socket.io": "^4.7.0",
+    "uuid": "^13.0.0",
+    "ws": "^8.13.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/supertest": "^2.0.12",
+    "@types/uuid": "^10.0.0",
+    "jest": "^29.6.1",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.0"
+  }
+}

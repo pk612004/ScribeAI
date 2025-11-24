@@ -1,0 +1,18 @@
+{
+  "name": "scribeai-starter",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "app",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm:dev-app\" \"npm:dev-server\"",
+    "dev-app": "npm --prefix app run dev",
+    "dev-server": "npm --prefix server run dev",
+    "start": "node server/dist/index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
