@@ -1,8 +1,4 @@
-// server/src/ffmpeg.ts
-/**
- * FFmpeg helper — prefer explicit FFMPEG_PATH, then @ffmpeg-installer, else rely on system PATH.
- * This file makes sure fluent-ffmpeg is pointed at the right binary.
- */
+
 
 import ffmpeg from 'fluent-ffmpeg'
 import fs from 'fs'
@@ -11,23 +7,20 @@ import path from 'path'
 
 let ffmpegPath: string | undefined
 
-// 1) If user set an explicit env var, use it
 if (process.env.FFMPEG_PATH && process.env.FFMPEG_PATH.trim() !== '') {
   ffmpegPath = process.env.FFMPEG_PATH
 }
 
-// 2) try @ffmpeg-installer if no env var
+
 if (!ffmpegPath) {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const installer = require('@ffmpeg-installer/ffmpeg')
     if (installer && installer.path) ffmpegPath = installer.path
   } catch (e) {
-    // installer not present — ignore
+    
   }
 }
 
-// 3) if we found a path, set it for fluent-ffmpeg
 if (ffmpegPath) {
   try {
     ffmpeg.setFfmpegPath(ffmpegPath)

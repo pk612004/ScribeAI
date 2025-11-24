@@ -1,4 +1,4 @@
-// server/test-summarize.ts
+
 (async () => {
   try {
     const { summarizeText } = await import('./src/lib/groq')

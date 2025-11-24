@@ -1,4 +1,4 @@
-// test-groq-ping.ts
+
 (async () => {
   try {
     const groq = await import('./src/lib/groq')

@@ -8,11 +8,11 @@ import { GeminiLiveClient, summarizeText } from './lib/groq'
 
 const base = path.join(tmpdir(), 'scribeai_chunks')
 
-// create the base dir synchronously at module load so we avoid top-level await
+
 try {
   fs.mkdirSync(base, { recursive: true })
 } catch (e) {
-  // ignore
+
 }
 
 export async function saveChunkToTemp(sessionId: string, index: number, buffer: Buffer) {
@@ -23,7 +23,7 @@ export async function saveChunkToTemp(sessionId: string, index: number, buffer: 
   return file
 }
 
-// processChunkBuffer: convert webm->linear16 then stream to Gemini Live WS
+
 export async function processChunkBuffer(sessionId: string, index: number, buffer: Buffer) {
   try {
     const wav = await webmToLinear16(buffer)
@@ -33,14 +33,14 @@ export async function processChunkBuffer(sessionId: string, index: number, buffe
     if (!client) {
       client = new GeminiLiveClient({ sessionId })
       await client.connect()
-      // wire events (persist/broadcast in real app)
+
       client.on('transcript', (msg: any) => {
-        // placeholder: in production broadcast to sockets & save segments
+
         console.log('gemini partial transcript for', sessionId, msg)
       })
       clients.set(sessionId, client)
     }
-    // send linear16 WAV buffer as realtime audio frame (gemini wrapper base64-encodes)
+    
     await client.sendAudioFrame(wav, { mimeType: 'audio/wav' })
     return { sessionId, index, text: `[segment ${index}] (sent to Gemini)`, startMs: index * 10000, endMs: (index + 1) * 10000 }
   } catch (err) {
@@ -49,7 +49,6 @@ export async function processChunkBuffer(sessionId: string, index: number, buffe
   }
 }
 
-// finalizeSession: close gemini client, aggregate saved chunks, and call summarizer
 export async function finalizeSession(sessionId: string) {
   const dir = path.join(base, String(sessionId))
   const files = await fsPromises.readdir(dir).catch(() => [])
